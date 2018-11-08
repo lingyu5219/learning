@@ -1,0 +1,70 @@
+1、下载：https://git-scm.com/download/win
+
+2、安装：其中选择Use Git from Git Bash only，其余一路下一步
+
+3、配置：
+    3.1、配置系统环境变量Path：C:\Program Files\Git\bin
+    3.2、配置git：桌面右键 Git Bash Here，进入命令行模式
+        3.2.1、配置账号/邮箱
+            git config --global user.name "tony"
+            git config --global user.email "18561351559@126.com"
+    
+4、初始化项目：进入项目目录，右键Git Bash Here，执行git init命令，会在项目目录下生成.git的目录。
+
+5、把文件添加到暂存区
+    git add .  （把当前目录下的所有文件添加到本地仓库）
+    git add readme.txt （把当前目录下的readme.txt文件添加到本地仓库）、
+
+6、把文件提交到本地仓库
+    git commit -m "文字说明"
+
+7、当文件修改后，重复第5步和第6步
+
+8、使用 git status 命令查看工作区的状态
+
+9、使用 git diff 可以查看文件修改了什么内容
+
+10、使用 git log 查看文件每次提交的版本历史纪录
+
+11、使用 git reset --hard HEAD^ 回退到上一个版本 （HEAD^^ 回退到前一个版本； HEAD~100 回退到前100个版本）
+    --hard 后面也可以使用 每一个版本的ID
+   
+12、Git管理的是修改，而不是文件
+
+13、回退
+    13.1、让文件回到最近一次git commit或git add时的状态：git checkout -- readme.txt
+    13.2、把暂存区的修改撤销掉，重新放回工作区：git reset HEAD readme.txt
+
+14、文件删除
+    git rm readme.txt
+
+15、分支管理
+    15.1、创建分支
+        创建一个名叫dev的分支：git branch dev
+        切换到dev分支：git checkout dev
+        以上两个操作合并：git checkout -b dev
+    15.2、合并分支
+        把dev分支合并到当前分支（首先切换到master分支，默认采用fast-foward模式）：git merge dev
+        采用普通模式合并分支：git merge --no-ff -m "采用普通方式合并分支" dev
+    15.3、分支策略
+        在实际开发过程中，建立一个master主分支，用于发布版本。建立一个dev分支，用于开发，在dev基础上给每个团队成员建立一个各自的分支，然后再通过合并到dev，最后合并到master。
+    15.4、bug分支
+        git stash命令将当前分支保存并隐藏，然后再创建新的分支去修复bug，完事之后再通过 git stash pop 命令恢复到原来的分支，继续之前的工作。
+    15.5、将提交历史分叉变成一条直线：git rebase
+
+16、标签管理
+    创建标签：git tag v1.0 （默认创建在最近的一次commit上） 或者 git tag v1.0 commitId（创建在指定的一次commit上）
+    删除标签：git tag -d v1.0
+    推送到远程：git push origin v1.0（推送指定的标签） 或者 git push origin --tags（推送全部标签）
+    删除远程标签：先删除本地：git tag -d v1.0，再将删除操作推送到远程：git push origin :refs/tags/v1.0
+
+17、将本地与服务器实现免密钥链接：
+    17.1、生成密钥，执行完以下命令后会在C:\Users\niit\.ssh目录下生成id_rsa.pub文件
+         ssh-keygen -t rsa -C 18561351559@126.com
+    
+    17.2、登录https://github.com，用户头像-Settings，点击SSH and GPG keys，New SSH Key，将本地生成的密钥文件：C:\Users\niit\.ssh\id_rsa.pub中的内容粘贴到key中
+    17.3、测试是否联通：ssh -T git@github.com
+
+18、建立服务器端仓库repository，登录https://github.com，new repository（例如仓库名：gitTest），创建完会生成https://github.com/lingyu5219/gitTest.git 或者 git@github.com:lingyu5219/gitTest.git
+
+19、在本地项目目录下的命令行中执行：git remote add origin git@github.com:lingyu5219/gitTest.git ，建立本地项目与服务器仓库的链接。
